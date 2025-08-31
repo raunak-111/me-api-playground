@@ -1,0 +1,390 @@
+{
+  "info": {
+    "name": "Me-API Playground",
+    "description": "Complete API collection for the Me-API Playground MERN stack application",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{auth_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "auth_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Get Health Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('auth_token', response.data.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "me"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile Management",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"title\": \"Full Stack Developer\",\n  \"bio\": \"Passionate developer with 5+ years of experience\",\n  \"location\": \"San Francisco, CA\",\n  \"phone\": \"+1-555-0123\",\n  \"skills\": [\n    {\n      \"name\": \"javascript\",\n      \"level\": \"expert\",\n      \"category\": \"frontend\"\n    },\n    {\n      \"name\": \"react\",\n      \"level\": \"expert\",\n      \"category\": \"frontend\"\n    },\n    {\n      \"name\": \"node.js\",\n      \"level\": \"advanced\",\n      \"category\": \"backend\"\n    }\n  ],\n  \"projects\": [\n    {\n      \"title\": \"E-Commerce Platform\",\n      \"description\": \"A full-stack e-commerce platform built with MERN stack\",\n      \"links\": [\"https://github.com/johndoe/ecommerce\"],\n      \"skills\": [\"react\", \"node.js\", \"mongodb\"],\n      \"status\": \"completed\"\n    }\n  ],\n  \"work\": [\n    {\n      \"company\": \"Tech Corp\",\n      \"position\": \"Senior Developer\",\n      \"description\": \"Led development of web applications\",\n      \"startDate\": \"2022-01-01\",\n      \"current\": true,\n      \"skills\": [\"react\", \"node.js\"]\n    }\n  ],\n  \"education\": [\n    {\n      \"institution\": \"University of Technology\",\n      \"degree\": \"Bachelor of Science\",\n      \"field\": \"Computer Science\",\n      \"startDate\": \"2016-09-01\",\n      \"endDate\": \"2020-06-01\",\n      \"gpa\": 3.8\n    }\n  ],\n  \"links\": {\n    \"github\": \"https://github.com/johndoe\",\n    \"linkedin\": \"https://linkedin.com/in/johndoe\",\n    \"portfolio\": \"https://johndoe.dev\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"title\": \"Senior Full Stack Developer\",\n  \"bio\": \"Updated bio with more experience\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Profile",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Get All Projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/projects",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "projects"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Projects by Skill",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/projects?skill=react",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "projects"],
+              "query": [
+                {
+                  "key": "skill",
+                  "value": "react"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Projects with Pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/projects?page=1&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "projects"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Skills",
+      "item": [
+        {
+          "name": "Get Top Skills",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/skills/top",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "skills", "top"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Top Skills with Limit",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/skills/top?limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "skills", "top"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Skills by Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/skills?category=frontend",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "skills"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "frontend"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Skills Grouped",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/skills",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "skills"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Search Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/search?q=react",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "react"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search with Multiple Terms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/search?q=full stack developer",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "full stack developer"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
