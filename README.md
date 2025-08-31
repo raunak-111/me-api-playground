@@ -277,21 +277,11 @@ cd server && npm test
 
 ##  Deployment
 
-### Vercel (Frontend + Backend)
-1. Connect your GitHub repository to Vercel
-2. Configure environment variables in Vercel dashboard
-3. Deploy using the included `vercel.json` configuration
+### Vercel (frontend)
+### Render (backend)
 
-### Netlify (Frontend) + Heroku (Backend)
-1. **Frontend (Netlify)**:
-   - Connect repository to Netlify
-   - Set build command: `cd client && npm run build`
-   - Set publish directory: `client/build`
 
-2. **Backend (Heroku)**:
-   - Create Heroku app
-   - Add MongoDB Atlas connection string
-   - Deploy using Git or GitHub integration
+
 
 ### Docker Deployment
 ```bash
