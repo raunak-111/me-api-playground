@@ -105,7 +105,7 @@ A comprehensive MERN stack application that serves as a personal profile and por
 ### Base URL
 ```
 Local: http://localhost:5000/api
-Production: [Your Production URL]/api
+Production: https://me-api-playground-git-master-raunaks-projects-7384bbd6.vercel.app/api
 ```
 
 ### Authentication
