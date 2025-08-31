@@ -27,18 +27,17 @@ app.use(compression());
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? [
-        'https://me-api-playground-eight.vercel.app',
-        'https://me-api-playground-git-master-raunaks-projects-7384bbd6.vercel.app',
-        'https://me-api-playground-ma5kwesos-raunaks-projects-7384bbd6.vercel.app'
-      ]
-    : ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  origin: [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://me-api-playground-eight.vercel.app',
+    'https://me-api-playground-git-master-raunaks-projects-7384bbd6.vercel.app',
+    'https://me-api-playground-ma5kwesos-raunaks-projects-7384bbd6.vercel.app'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
 
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
